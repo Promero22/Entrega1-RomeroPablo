@@ -1,0 +1,29 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+    <h1>Profesionales de CMP</h1>
+    <ul>
+        {% for profesional in object_list %}
+
+            <li>
+                <p>NOMBRE: {{ profesional.nombre }} APELLIDO: {{profesional.apellido}} ESPECIALIDAD {{profesional.profesion}}</p>
+                <p> 
+                    <a href="{% url 'PDetail' profesional.id %}">Ver</a> | 
+                    <a href="{% url 'PEdit' profesional.id %}">Editar</a> | 
+                    <a href="{% url 'PDelete' profesional.id %}">Borrar</a> 
+                
+                </p> 
+            </li>
+
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'PNew'  %}">Nuevo</a> | 
+
+    <br>
+
+    <button>
+        <a href="{% url 'Inicio'  %}">Volver</a>
+    </button>
+{% endblock %}

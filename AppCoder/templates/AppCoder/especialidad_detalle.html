@@ -1,0 +1,14 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+
+   
+    <p>nombre: <i>{{ especialidad.nombre}}</i></p>
+    <p>numero: <i>{{ especialidad.numero}}</i></p>
+    <p>
+        <a href="{% url 'EList' %}">Regresar</a>
+    </p>
+
+    
+{% endblock %}

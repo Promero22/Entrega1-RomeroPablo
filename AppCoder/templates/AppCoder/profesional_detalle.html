@@ -1,0 +1,14 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+   
+    <p>nombre: <i>{{ profesional.nombre}}</i></p>
+    <p>apellido: <i>{{ profesional.apellido}}</i></p>
+    <p>email: <i>{{ profesional.email }}</i></p>
+    <p>profesion: <i>{{ profesional.profesion}}</i></p>
+    <p>
+        <a href="{% url 'PList' %}">Regresar</a>
+    </p>
+
+{% endblock %}

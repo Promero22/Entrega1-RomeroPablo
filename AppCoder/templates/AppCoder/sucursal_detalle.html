@@ -1,0 +1,13 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+   
+    <p>localidad: <i>{{ sucursal.localidad }}</i></p>
+    <p>direccion: <i>{{ sucursal.direccion }}</i></p>
+    <p>telefono: <i>{{ sucursal.telefono}}</i></p>
+    <p>email: <i>{{ sucursal.email }}</i></p>
+    <p>
+        <a href="{% url 'SList' %}">Regresar</a>
+    </p>
+{% endblock %}

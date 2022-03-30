@@ -1,0 +1,29 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+    <h1>Especialidades en CMP</h1>
+    <ul>
+        {% for especialidad in object_list %}
+
+            <li>
+                <p>NOMBRE: {{ especialidad.nombre }} NUMERO: {{especialidad.numero}}</p>
+                <p> 
+                    <a href="{% url 'EDetails' especialidad.id %}">Ver</a> | 
+                    <a href="{% url 'EEdit' especialidad.id %}">Editar</a> | 
+                    <a href="{% url 'EDelete' especialidad.id %}">Borrar</a> 
+                
+                </p> 
+            </li>
+
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'ENew'  %}">Nuevo</a> | 
+
+    <br>
+
+    <button>
+        <a href="{% url 'Inicio'  %}">Volver</a>
+    </button>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+    <h1>Sucursales de CMP</h1>
+    <ul>
+        {% for sucursal in object_list %}
+
+            <li>
+                <p>NOMBRE: {{ sucursal.localidad }} DIRECCION: {{sucursal.direccion}} </p>
+                <p> 
+                    <a href="{% url 'SDetails' sucursal.id %}">Ver</a> | 
+                    <a href="{% url 'SEdit' sucursal.id %}">Editar</a> | 
+                    <a href="{% url 'SDelete' sucursal.id %}">Borrar</a> 
+                
+                </p> 
+            </li>
+
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'SNew'  %}">Nuevo</a> | 
+
+    <br>
+
+    <button>
+        <a href="{% url 'Inicio'  %}">Volver</a>
+    </button>
+
+{% endblock %}

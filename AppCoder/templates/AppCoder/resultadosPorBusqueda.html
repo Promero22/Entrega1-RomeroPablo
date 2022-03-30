@@ -1,0 +1,17 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+<p>Estamos buscando el: {{numero}}</p>
+
+{% if especialidades %}
+<ul>
+{% for especialidad in especialidades %}
+    <li>{{especialidad.nombre}}</li>
+    <li>{{especialidad.numero}}</li>
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
+{% endblock %}
