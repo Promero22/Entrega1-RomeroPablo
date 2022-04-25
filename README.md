@@ -81,6 +81,9 @@ Si se selecciona el mismo seran redirigidos a al formulario de registro donde se
 
 15. los usuarios administradores podran desde el Admin realizar el ABM de usuarios, registros para los 3 modelos, Avatars y grupos.
 
+VIDEO: 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/_vJ-bJAwRzw/0.jpg)](https://www.youtube.com/watch?v=_vJ-bJAwRzw)
+  
 ***
 Pablo Romero 04-2022
 END
