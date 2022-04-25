@@ -3,6 +3,17 @@
 {% block contenidoQueCambia %}
 
 <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+{% if not request.user.is_authenticated %}
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<div class="text-center">
+    <img height="40px" src="{{url}}">
+    <h3>Nos alegra saber de vos {{user.username}}</h3>
+</div>
+{% endif %}
+
+
 <h1>CONÓZCANOS</h1>
 <p>Nos conocemos desde hace mucho tiempo, te cuidamos más que nunca. 
 

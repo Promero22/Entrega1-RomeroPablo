@@ -1,0 +1,16 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+<a class="text-center"> 
+    <h3>Por favor completa tus datos para registrarte</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+            
+        {{ form.as_p }}
+        {{ miFormulario.as_p }}
+
+        <button type="submit">Registrate!</button>
+
+    </form>
+</a>
+{% endblock %}

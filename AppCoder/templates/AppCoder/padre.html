@@ -17,8 +17,9 @@
   <!-- Google fonts-->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
   <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="{%static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
-
+  <!-- <link href="{%static 'AppCoder/css/styles.css' %}" rel="stylesheet" /> -->
+  <link href="{%static 'AppCoder/assets/css/theme.css' %}" rel="stylesheet" />
+  <link href="{%static 'AppCoder/assets/css/bootstrap.css' %}" rel="stylesheet" />
 </head>
 <body>
 
@@ -34,6 +35,8 @@
               <a href="#"><span class="mai-call text-primary"></span> +54 11 2222 3333</a>
               <span class="divider">|</span>
               <a href="#"><span class="mai-mail text-primary"></span> centromedico@dominio.com</a>
+              <span class="divider">|</span>
+              <a class="btn text-muted small mb-lg-0" href="{% url 'About' %}">About us</a>
             </div>
           </div>
           
@@ -56,20 +59,35 @@
 
         <div class="collapse navbar-collapse" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item  active">
               <a class="nav-link" href="{% url 'Inicio' %}">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item  active">
               <a class="nav-link" href="{% url 'PList' %}">Nuestros Profesionales</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item  active">
               <a class="nav-link" href="{% url 'EList' %}">Especialidades</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item  active">
               <a class="nav-link" href="{% url 'SList' %}">Sucursales</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-primary ml-lg-3" href="http://127.0.0.1:8000/admin">Login Admin</a>
+              {% if not request.user.is_authenticated %}
+              <a class="btn btn-primary ml-lg-3" href="{% url 'Login' %}">Login</a>
+              {% endif %}
+
+              {% if request.user.is_authenticated %}              
+              <p class="text-primary  mb-4 mb-lg-0 text-center"> Hola, {{user.username}}</p>
+              <a class="btn text-muted small mb-4 mb-lg-0" href="{% url 'UserDetalle' %}">Tu Perfil</a>
+              <a class="btn text-muted small mb-4 mb-lg-0" href="{% url 'Logout' %}">Logout</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              {% if not request.user.is_authenticated %}
+              <a class="btn btn-primary ml-lg-3" href="{% url 'Register' %}">Registrate</a>
+              {% endif %}
+              {% if request.user.is_authenticated %}   
+              {% endif %}
             </li>
           </ul>
         </div> <!-- .navbar-collapse -->
@@ -78,22 +96,23 @@
   </header>
 
   <div class="page-hero bg-image overlay-dark" style="background-image: url(https://veigler.com/wp-content/uploads/2020/01/centro-medico-e1620819797482.jpg); height: 400px;">
-    <div class="hero-section"></div>
+    <div class="hero-section">
       <div class="container text-center wow zoomIn" >
-        <span class="subhead" style="color: azure; -webkit-text-stroke:0.5px black; font-size: 50px; font-family: Hind,sans-serif;">Cuida lo que amas</span>
-        <h1 class="display-4" style="color: #0d6efd; -webkit-text-stroke:0.5px black; font-size: 90px; font-family: Hind,sans-serif" >Centro Medico Privado</h1>
+        <span class="subhead" style="color: azure; -webkit-text-stroke:0.5px black; font-size: 50px; font-family: Montserrat, sans-serif;">Cuida lo que amas</span>
+        <h1 class="display-4" style="color: #0d6efd; -webkit-text-stroke:0.5px black; font-size: 90px; font-family: Raleway,Helvetica,Arial,Lucida,sans-serif;" >Centro Medico Privado</h1>
       </div>
     </div>
   </div>
 
+  <div class="box" style="padding: 1em">
   {% block contenidoQueCambia %}
 
   {% endblock %}
- 
-  <footer class="page-footer" style="background-color: #4a4e55;">
+  </div>
+  <footer class="page-footer" style="background-color: #4a4e55;" >
     <div class="container">
       <div class="row px-md-3">
-        <div class="col-sm-18 col-lg-9 py-9">
+        <div class="col-sm-18 col-lg-9 py-9" style="float:left;">
           <h5 style="color:azure">Mas de Nosotros</h5>
           <ul class="footer-menu">
             <li><a href="{% url 'Inicio' %}">Home</a></li>
@@ -101,9 +120,14 @@
             <li><a href="{% url 'EList' %}">Especialidades</a></li>
             <li><a href="{% url 'SList' %}">Sucursales</a></li>
             <li><a href="{% url 'BusquedaEspecialidad' %}">Buscar</a></li>
+            <li><a href="{% url 'AgregarAvatar' %}">Sumar un Avatar</a></li>
+            <li><a href="{% url 'About' %}">About us</a></li>
+            <li><a href="http://127.0.0.1:8000/admin">Admin</a></li>
+            <li><a href="{% url 'Index' %}">Index</a></li>
           </ul>
+        </div>  
         
-        <div class="col-sm-6 col-lg-3 py-3">
+        <div class="col-sm-6 col-lg-3 py-3" style="float:right;">
           <h5 style="color:azure">Contacto</h5>
           <p class="footer-link mt-2" style="color:azure">Avenida Cordoba 3000</p>
           <p class="footer-link" style="color:azure">+54 11 2222 3333</a>

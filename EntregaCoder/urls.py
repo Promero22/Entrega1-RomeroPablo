@@ -20,3 +20,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('AppCoder/', include('AppCoder.urls')),
 ]
+
+#Para las imagenes
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import RedirectView
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='/AppCoder/', permanent=True)), # Para que ingrese directamente a nuestra pagina
+    path('AppCoder/', include('AppCoder.urls')),
+    
+]
+
+urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

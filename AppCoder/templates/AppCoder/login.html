@@ -1,0 +1,16 @@
+{% extends 'AppCoder/padre.html'%}  
+{% load static %}
+{% block contenidoQueCambia %}
+
+<a class="text-center"> 
+<h1>Inicia sesion para ingresar al portal:</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+            {{ form.as_p }}
+
+        <button type="submit">Inciar sesion</button>
+
+    </form>
+</a>
+{% endblock %}

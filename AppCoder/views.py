@@ -1,15 +1,15 @@
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponse
 
-from AppCoder.models import Profesional, Sucursal, Especialidad
-from AppCoder.forms import  ProfesionalFormulario, SucursalFormulario, EspecialidadFormulario
+from AppCoder.models import Avatar, Profesional, Sucursal, Especialidad
+from AppCoder.forms import  ProfesionalFormulario, SucursalFormulario, EspecialidadFormulario, UserRegisterForm, UserEditForm, AvatarFormulario
 
 
 # Create your views here.
 
-def inicio(request):
+# def inicio(request):
 
-    return render(request, "AppCoder/inicio.html")
+#     return render(request, "AppCoder/inicio.html")
 
 def SucursalFormulario(request):
 
@@ -176,3 +176,141 @@ def buscar(request):
     #No olvidar from django.http import HttpResponse
     return HttpResponse(respuesta)
 
+#Para el login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+
+def login_request(request):
+
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data = request.POST)
+
+        if form.is_valid():  # Si pasó la validación de Django
+
+            usuario = form.cleaned_data.get('username')
+            contrasenia = form.cleaned_data.get('password')
+
+            user = authenticate(username= usuario, password=contrasenia)
+
+            if user is not None:
+                login(request, user)
+                avatares=Avatar.objects.filter(user = request.user.id)
+                
+                for i in range(len(avatares)):
+                    if avatares[i] =='':
+                
+                        return render(request, "AppCoder/inicio.html")
+                
+                    else:
+                        return render(request, "AppCoder/inicio.html", {"url":avatares[0].imagen.url})
+               
+            else:
+                return render(request, "AppCoder/mensaje.html", {"mensaje":"Datos incorrectos, por favor intenta loguearte nuevamente"})
+           
+        else:
+
+            return render(request, "AppCoder/mensaje.html", {"mensaje":"Datos incorrectos, por favor intenta loguearte nuevamente"})
+
+    form = AuthenticationForm()
+
+    return render(request, "AppCoder/login.html", {"form": form})
+
+def register(request):
+
+      if request.method == 'POST':
+
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+
+                  username = form.cleaned_data['username']
+                  form.save()
+                  return render(request,"AppCoder/mensaje.html" ,  {"mensaje":"Usuario Creado! por favor selecciona Login para loguearte"})
+
+      else:
+            #form = UserCreationForm()       
+            form = UserRegisterForm()     
+
+      return render(request,"AppCoder/registro.html" ,  {"form":form})
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def inicio(request):
+    
+    avatares=Avatar.objects.filter(user = request.user.id)
+
+    for i in range(len(avatares)):
+        if avatares[i] =='':
+                
+            return render(request, "AppCoder/inicio.html")
+                
+        else:
+            return render(request, "AppCoder/inicio.html", {"url":avatares[0].imagen.url})
+    return render(request, "AppCoder/inicio.html")
+
+
+# Vista de editar el perfil
+@login_required
+def editarPerfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = UserEditForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            usuario.last_name = informacion['last_name']
+            usuario.first_name = informacion['first_name']
+            usuario.save()
+
+            return render(request, "AppCoder/mensaje.html", {"mensaje":"Haz cambiado tus datos correctamente!"})
+
+    else:
+
+        miFormulario = UserEditForm(initial={'email': usuario.email})
+
+    return render(request, "AppCoder/editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})
+
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
+
+@login_required
+def agregarAvatar(request):
+    if request.method == "POST":
+        miFormulario = AvatarFormulario(request.POST, request.FILES) #Aca llega toda la informacion
+        avatares=Avatar.objects.filter(user = request.user.id)
+        if miFormulario.is_valid():
+            u=User.objects.get(username=request.user)
+            avatar=Avatar(user=u, imagen=miFormulario.cleaned_data["imagen"])
+            avatar.save()
+            return render(request, "AppCoder/inicio.html", {"url":avatares[0].imagen.url}) #vuelve al inicio
+
+    else:
+        miFormulario = AvatarFormulario() #formulario para construir el html            
+      
+    return render(request, "AppCoder/agregarAvatar.html", {"miFormulario":miFormulario})
+
+def mensaje(request):
+
+    return render(request, "AppCoder/mensaje.html")
+
+def about(request):
+
+    return render(request, "AppCoder/about.html")
+
+def index(request):
+
+    return render(request, "AppCoder/index.html")
+
+@login_required
+def userDetalle(request):
+
+    return render(request, "AppCoder/user_detalle.html")
